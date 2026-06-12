@@ -10,18 +10,18 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- 🛠️ परमानेंट इन-लाइन कड़क डिज़ाइन (स्क्रीनशॉट की तरह कभी नहीं बिखरेगा) -->
+    <!-- कड़क इन-लाइन डिज़ाइन जो कभी नहीं बिखरेगा -->
     <style>
         body { font-family: sans-serif; background-color: #f3f4f6; margin: 0; padding: 0; box-sizing: border-box; }
-        .header { background-color: #ea580c; color: white; text-align: center; padding: 20px 10px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 50; }
-        .header h1 { margin: 0; font-size: 22px; font-weight: bold; letter-spacing: 0.5px; }
+        .header { background-color: #ea580c; color: white; text-align: center; padding: 20px 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 50; }
+        .header h1 { margin: 0; font-size: 22px; font-weight: bold; }
         .header p { margin: 5px 0 0 0; font-size: 12px; color: #ffedd5; }
-        .container { max-width: 600px; margin: 0 auto; padding: 15px; pb: 80px; }
+        .container { max-width: 600px; margin: 0 auto; padding: 15px; padding-bottom: 80px; }
         
-        /* Summary Grid */
+        /* Summary Cards */
         .grid { display: grid; grid-template-cols: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-        .grid-full { grid-column: span 2; }
-        .card { background: white; padding: 12px; rounded-radius: 12px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center; }
+        .card-full { grid-column: span 2; }
+        .card { background: white; padding: 12px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center; }
         .card p { margin: 0; font-size: 11px; color: #6b7280; font-weight: bold; text-transform: uppercase; }
         .card h2 { margin: 5px 0 0 0; font-size: 20px; font-weight: 800; }
         .c-orange { border-bottom: 4px solid #ea580c; }
@@ -30,7 +30,7 @@
         .c-red { border-bottom: 4px solid #dc2626; color: #dc2626; }
         .c-purple { border-bottom: 4px solid #9333ea; color: #9333ea; }
 
-        /* Search Filter */
+        /* Search & Filters */
         .search-box { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px; }
         .search-input-wrapper { position: relative; width: 100%; }
         .search-input-wrapper i { position: absolute; left: 12px; top: 12px; color: #9ca3af; }
@@ -40,20 +40,19 @@
         .btn-filter.active { background-color: #ea580c; color: white; }
 
         /* Sections */
-        .section-box { background: white; border-radius: 12px; shadow: 0 1px 3px rgba(0,0,0,0.1); box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px; overflow: hidden; }
-        .section-title { padding: 12px 15px; background: #f9fafb; font-weight: bold; font-size: 14px; color: #374151; border-b: 1px solid #f3f4f6; display: flex; justify-content: space-between; items-center: center; }
+        .section-box { background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px; overflow: hidden; }
+        .section-title { padding: 12px 15px; background: #f9fafb; font-weight: bold; font-size: 14px; color: #374151; border-bottom: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; }
         .section-title.expense-head { background: #fef2f2; color: #991b1b; }
         .list-container { max-height: 300px; overflow-y: auto; }
         .row-item { padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f3f4f6; font-size: 14px; }
         
-        /* Badges & Buttons */
+        /* Badges & Action Buttons */
         .badge-paid { background-color: #f0fdf4; color: #16a34a; font-weight: bold; padding: 4px 12px; border-radius: 9999px; font-size: 13px; }
         .btn-pending { background-color: #fef9c3; color: #a16207; font-weight: bold; padding: 5px 12px; border: none; border-radius: 9999px; font-size: 12px; cursor: pointer; }
-        .btn-pending:hover { background-color: #fef08a; }
         .btn-add-exp { background-color: #dc2626; color: white; padding: 5px 10px; border: none; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; }
-        .btn-trash { color: #ef4444; border: none; background: none; cursor: pointer; margin-right: 10px; font-size: 14px; }
+        .btn-trash { color: #ef4444; border: none; background: none; cursor: pointer; margin-right: 10px; }
 
-        /* Bottom Controls */
+        /* Control Panel */
         .admin-panel { background: #fffbeb; border: 1px solid #fef3c7; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 30px; }
         .admin-panel h3 { margin: 0 0 10px 0; font-size: 13px; color: #92400e; font-weight: bold; }
         .flex-buttons { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
@@ -65,15 +64,13 @@
 </head>
 <body>
 
-    <!-- Header -->
     <div class="header">
         <h1>🙏 श्री प्रगति गणेश युवक मंडल 🙏</h1>
         <p id="sync-status">🔄 लाइव सर्वर से कनेक्ट हो रहा है...</p>
     </div>
 
     <div class="container">
-        
-        <!-- Summary Dashboard Boxes -->
+        <!-- Summary Dashboard -->
         <div class="grid">
             <div class="card c-orange"><p>कुल सदस्य</p><h2 id="total-members-count">5</h2></div>
             <div class="card c-green"><p>जमा वाले</p><h2 id="paid-count">0</h2></div>
@@ -82,7 +79,7 @@
             <div class="card card-full c-purple"><p>बचे पैसे (कैश बैलेंस)</p><h2 id="net-balance">₹0</h2></div>
         </div>
 
-        <!-- Search Bar -->
+        <!-- Search Box -->
         <div class="search-box">
             <div class="search-input-wrapper">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -112,7 +109,7 @@
             <div id="expenses-list" class="list-container"></div>
         </div>
 
-        <!-- Admin Controls Panel -->
+        <!-- Admin Control Panel -->
         <div class="admin-panel">
             <h3>⚙️ एडमीन स्पेशल कंट्रोल पैनल</h3>
             <div class="flex-buttons">
@@ -124,10 +121,10 @@
     </div>
 
     <script>
-        // 🔐 यह यूनीक सिक्योर लिंक है जो बिना किसी टोकन के डेटा को 100 साल तक पक्का सेव रखेगा
+        // 🔐 यह यूनीक परमानेंट लाइव डेटाबेस लिंक है जो 100 साल तक बिना टोकन के लाइव सिंक रखेगा
         const CLOUD_DATABASE_URL = "https://api.restful-api.dev/objects/ff8081819077b10201907b5d55555555";
-
         const ADMIN_PASSWORD = "9680"; 
+
         let mandalData = {
             memberNames: {"m1": "निमेष भाई", "m2": "राहुल भाई", "m3": "रोहन पटेल", "m4": "निर्मल कुमार", "m5": "कार्तिक हलपति"},
             years: {"2026": {collections: {}, expenses: []}}
@@ -162,7 +159,7 @@
             refreshAll();
         }
 
-        // सर्वर पर डेटा पक्का भेजने का सिस्टम
+        // सर्वर पर डेटा भेजने का सिस्टम
         async function saveDataToCloud() {
             document.getElementById('sync-status').innerText = "📤 क्लाउड पर लाइव सेव हो रहा है...";
             localStorage.setItem('mandal_backup', JSON.stringify(mandalData)); 
@@ -180,7 +177,7 @@
                 if(response.ok) {
                     document.getElementById('sync-status').innerText = "✅ फेसबुक की तरह सबको तुरंत दिखेगा!";
                 } else {
-                    document.getElementById('sync-status').innerText = "⚠️ सर्वर व्यस्त, फोन में सुरक्षित है!";
+                    document.getElementById('sync-status').innerText = "⚠️ सर्वर व्यस्त, लोकल फोन में सुरक्षित है!";
                 }
             } catch (err) {
                 document.getElementById('sync-status').innerText = "✅ फोन मेमोरी में सुरक्षित सेव्ड!";
