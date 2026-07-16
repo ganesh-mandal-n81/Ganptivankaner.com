@@ -1007,7 +1007,25 @@
                 alert("✅ વચ્ચે નામ એડ થઈ ગયું અને નીચેના સભ્યો એક ક્રમ નીચે શિફ્ટ થઈ ગયા!");
             } else {
                 db.collection("mandal_years").doc(selectedYear).collection("members").doc(idStr).set(newData);
-            }
+         // 🛠️ PDF ડાઉનલોડનું પ્રોપર ફંક્શન અહીં પેસ્ટ કરો
+        function downloadPDFReport() {
+            const element = document.getElementById('mandal-app-content');
+            const opt = {
+                margin:       [0.5, 0.5, 0.5, 0.5],
+                filename:     'Mandal_Hisab_Report_' + selectedYear + '.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+
+        // આ રહી એ લાઇન જ્યાં તમારે કોડ પેસ્ટ કરવાનો છે (સૌથી છેલ્લે)
+        // ડાઉનલોડ ફંક્શન પછી જે નીચેનું ફંક્શન છે, તેની ઉપર પેસ્ટ કરજો
+        document.getElementById('year-input').addEventListener('input', (e) => {
+            // ... બાકીનો કોડ ...
+        });
+           }
         }
 
         document.getElementById('year-input').addEventListener('input', (e) => {
